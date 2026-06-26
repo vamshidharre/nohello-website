@@ -87,21 +87,72 @@ function initVisitorCounter() {
 
     if (!counterEl || !countEl) return;
 
-    // Use /up endpoint — it both increments and returns the count
-    // This is the only reliably working endpoint on counterapi.dev
-    fetch('https://api.counterapi.dev/v1/nohello-site/unique-visitors/up')
+    // Use visitor-badge as a hidden image to track + count visits.
+    // Then parse the count from the loaded SVG via a canvas.
+    var badgeUrl = 'https://visitor-badge.laobi.icu/badge?page_id=vamshidharre.nohello-website&left_color=transparent&right_color=transparent&left_text=.';
+
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.onload = function () {
+        // Draw to canvas to read the SVG content is not needed;
+        // instead, fetch the SVG text to parse the number
+        fetchBadgeSvg(badgeUrl, counterEl, countEl);
+    };
+    img.onerror = function () {
+        // Even if crossOrigin fails, try the fetch anyway
+        fetchBadgeSvg(badgeUrl, counterEl, countEl);
+    };
+    img.src = badgeUrl;
+}
+
+function fetchBadgeSvg(url, containerEl, countEl) {
+    fetch(url)
         .then(function (res) {
             if (!res.ok) throw new Error('HTTP ' + res.status);
-            return res.json();
+            return res.text();
         })
-        .then(function (data) {
-            if (data && typeof data.count === 'number') {
-                showCounter(counterEl, countEl, data.count);
+        .then(function (svgText) {
+            // The SVG contains text elements with the visitor count
+            // Parse the count from the last <text> elements
+            var matches = svgText.match(/<text[^>]*>(\d+)<\/text>/g);
+            if (matches && matches.length > 0) {
+                var lastMatch = matches[matches.length - 1];
+                var numMatch = lastMatch.match(/>(\d+)</);
+                if (numMatch && numMatch[1]) {
+                    var count = parseInt(numMatch[1], 10);
+                    if (count > 0) {
+                        showCounter(containerEl, countEl, count);
+                        return;
+                    }
+                }
             }
+            // If parsing failed, try the img-only fallback
+            showBadgeFallback(containerEl, countEl, url);
         })
         .catch(function () {
-            // API down — show nothing, no broken UI
+            // CORS blocked the fetch — use img fallback
+            showBadgeFallback(containerEl, countEl, url);
         });
+}
+
+function showBadgeFallback(containerEl, countEl, url) {
+    // If fetch was blocked by CORS, load the badge as a visible img
+    // inside our styled pill — still looks decent
+    var badgeImg = document.createElement('img');
+    badgeImg.src = 'https://visitor-badge.laobi.icu/badge?page_id=vamshidharre.nohello-website&left_color=%23f3f0eb&right_color=%232d7a4f&left_text=visitors&query_only=true';
+    badgeImg.alt = 'visitor count';
+    badgeImg.style.height = '18px';
+    badgeImg.style.borderRadius = '3px';
+
+    // Replace the count text with the badge image
+    countEl.textContent = '';
+    countEl.appendChild(badgeImg);
+
+    // Hide the "readers" label since the badge has its own label
+    var label = containerEl.querySelector('.visitor-label');
+    if (label) label.style.display = 'none';
+
+    containerEl.classList.add('loaded');
 }
 
 function showCounter(containerEl, countEl, finalCount) {
