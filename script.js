@@ -82,54 +82,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 function initVisitorCounter() {
-    var NAMESPACE = 'nohello-site';
-    var KEY = 'unique-visitors';
     var counterEl = document.getElementById('visitor-counter');
     var countEl = document.getElementById('visitor-count');
 
     if (!counterEl || !countEl) return;
 
-    var hasVisited = localStorage.getItem('nohello_counted');
-
-    if (hasVisited) {
-        // Already counted, just fetch the current number
-        fetchCount(NAMESPACE, KEY, function (count) {
-            showCounter(counterEl, countEl, count);
-        });
-    } else {
-        // First visit, increment and mark
-        incrementCount(NAMESPACE, KEY, function (count) {
-            localStorage.setItem('nohello_counted', '1');
-            showCounter(counterEl, countEl, count);
-        });
-    }
-}
-
-function fetchCount(ns, key, callback) {
-    var url = 'https://api.counterapi.dev/v1/' + ns + '/' + key;
-    fetch(url)
-        .then(function (res) { return res.json(); })
+    // Use /up endpoint — it both increments and returns the count
+    // This is the only reliably working endpoint on counterapi.dev
+    fetch('https://api.counterapi.dev/v1/nohello-site/unique-visitors/up')
+        .then(function (res) {
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return res.json();
+        })
         .then(function (data) {
             if (data && typeof data.count === 'number') {
-                callback(data.count);
+                showCounter(counterEl, countEl, data.count);
             }
         })
         .catch(function () {
-            // API unreachable, fail silently
-        });
-}
-
-function incrementCount(ns, key, callback) {
-    var url = 'https://api.counterapi.dev/v1/' + ns + '/' + key + '/up';
-    fetch(url)
-        .then(function (res) { return res.json(); })
-        .then(function (data) {
-            if (data && typeof data.count === 'number') {
-                callback(data.count);
-            }
-        })
-        .catch(function () {
-            // API unreachable, fail silently
+            // API down — show nothing, no broken UI
         });
 }
 
