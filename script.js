@@ -74,4 +74,93 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }, { passive: true });
 
+
+    // Unique visitor counter
+    initVisitorCounter();
+
 });
+
+
+function initVisitorCounter() {
+    var NAMESPACE = 'nohello-site';
+    var KEY = 'unique-visitors';
+    var counterEl = document.getElementById('visitor-counter');
+    var countEl = document.getElementById('visitor-count');
+
+    if (!counterEl || !countEl) return;
+
+    var hasVisited = localStorage.getItem('nohello_counted');
+
+    if (hasVisited) {
+        // Already counted, just fetch the current number
+        fetchCount(NAMESPACE, KEY, function (count) {
+            showCounter(counterEl, countEl, count);
+        });
+    } else {
+        // First visit, increment and mark
+        incrementCount(NAMESPACE, KEY, function (count) {
+            localStorage.setItem('nohello_counted', '1');
+            showCounter(counterEl, countEl, count);
+        });
+    }
+}
+
+function fetchCount(ns, key, callback) {
+    var url = 'https://api.counterapi.dev/v1/' + ns + '/' + key;
+    fetch(url)
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data && typeof data.count === 'number') {
+                callback(data.count);
+            }
+        })
+        .catch(function () {
+            // API unreachable, fail silently
+        });
+}
+
+function incrementCount(ns, key, callback) {
+    var url = 'https://api.counterapi.dev/v1/' + ns + '/' + key + '/up';
+    fetch(url)
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+            if (data && typeof data.count === 'number') {
+                callback(data.count);
+            }
+        })
+        .catch(function () {
+            // API unreachable, fail silently
+        });
+}
+
+function showCounter(containerEl, countEl, finalCount) {
+    if (finalCount < 1) return;
+
+    // Animate the number counting up
+    var duration = 1400;
+    var startVal = Math.max(0, finalCount - 30);
+    var startTime = null;
+
+    function formatNum(n) {
+        return n.toLocaleString();
+    }
+
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        // Ease-out cubic
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(startVal + (finalCount - startVal) * eased);
+        countEl.textContent = formatNum(current);
+
+        if (progress < 1) {
+            requestAnimationFrame(step);
+        } else {
+            countEl.textContent = formatNum(finalCount);
+        }
+    }
+
+    countEl.textContent = formatNum(startVal);
+    containerEl.classList.add('loaded');
+    requestAnimationFrame(step);
+}
