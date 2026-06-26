@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Please Don't Just Say Hello in Chat</title>
+    <meta name="description" content="A guide to better chat etiquette. Don't just say hello — include your question in the first message to save everyone's time.">
+    <meta property="og:title" content="No Hello — Chat Etiquette That Respects Everyone's Time">
+    <meta property="og:description" content="Stop saying just 'hello' in chat. Learn why you should always lead with your question.">
+    <meta property="og:type" content="website">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
+</head>
+<body>
+    <div class="grain-overlay"></div>
+
+    <header id="site-header">
+        <nav id="main-nav">
+            <a href="#" class="logo" id="logo-link">
+                <span class="logo-icon">💬</span>
+                <span class="logo-text">nohello</span>
+            </a>
+            <div class="nav-links">
+                <a href="#the-problem" id="nav-problem">The Problem</a>
+                <a href="#the-fix" id="nav-fix">The Fix</a>
+                <a href="#why-it-matters" id="nav-why">Why?</a>
+                <a href="#tldr" id="nav-tldr">TL;DR</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" id="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge" id="hero-badge">chat etiquette</div>
+                <h1 id="main-heading">Please don't just say<br><span class="highlight">"hello"</span> in chat.</h1>
+                <p class="hero-subtitle" id="hero-subtitle">You wouldn't call someone, say "hi," and then put them on hold while you figure out what to say. So why do it in chat?</p>
+                <a href="#the-problem" class="cta-button" id="cta-learn-more">
+                    See what we mean
+                    <span class="cta-arrow">↓</span>
+                </a>
+            </div>
+            <div class="hero-visual" id="hero-visual">
+                <div class="floating-bubble bubble-1" id="bubble-hello">Hello!</div>
+                <div class="floating-bubble bubble-2" id="bubble-hi">Hi there 👋</div>
+                <div class="floating-bubble bubble-3" id="bubble-hey">hey, you around?</div>
+                <div class="floating-bubble bubble-4" id="bubble-ping">ping</div>
+                <div class="floating-bubble bubble-5" id="bubble-yo">yo</div>
+            </div>
+        </section>
+
+        <section class="problem-section" id="the-problem">
+            <div class="section-container">
+                <div class="section-label" id="problem-label">The Problem</div>
+                <h2 id="problem-heading">This is how it usually goes</h2>
+                <p class="section-intro" id="problem-intro">It seems innocent, but a standalone "hello" in chat wastes time for both people.</p>
+
+                <div class="chat-demo bad" id="chat-bad">
+                    <div class="chat-header">
+                        <span class="chat-dot red"></span>
+                        <span class="chat-dot yellow"></span>
+                        <span class="chat-dot green"></span>
+                        <span class="chat-title">slack &mdash; #engineering</span>
+                    </div>
+                    <div class="chat-body">
+                        <div class="chat-message sent" id="msg-bad-1">
+                            <div class="msg-meta"><span class="msg-author you">you</span> <span class="msg-time">12:32 PM</span></div>
+                            <div class="msg-text">Hi</div>
+                        </div>
+                        <div class="chat-message received" id="msg-bad-2">
+                            <div class="msg-meta"><span class="msg-author them">co-worker</span> <span class="msg-time">12:32 PM</span></div>
+                            <div class="msg-text">Hello.</div>
+                        </div>
+                        <div class="chat-waiting" id="msg-bad-waiting">
+                            <div class="waiting-icon">
+                                <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                            </div>
+                            <span>co-worker waits while you type your actual question&hellip;</span>
+                        </div>
+                        <div class="chat-message sent" id="msg-bad-3">
+                            <div class="msg-meta"><span class="msg-author you">you</span> <span class="msg-time">12:34 PM</span></div>
+                            <div class="msg-text">I'm working on the auth module and I'm trying to figure out why the session token expires after 5 minutes instead of 30. Do you know where that config lives?</div>
+                        </div>
+                        <div class="chat-message received" id="msg-bad-4">
+                            <div class="msg-meta"><span class="msg-author them">co-worker</span> <span class="msg-time">12:35 PM</span></div>
+                            <div class="msg-text">Oh, check <code>config/auth.yaml</code> — the TTL is set there.</div>
+                        </div>
+                    </div>
+                    <div class="chat-verdict" id="verdict-bad">
+                        <span class="verdict-icon">⏱️</span>
+                        <span class="verdict-text">3 minutes wasted — your co-worker sat there waiting for nothing</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fix-section" id="the-fix">
+            <div class="section-container">
+                <div class="section-label" id="fix-label">The Fix</div>
+                <h2 id="fix-heading">Just include your question</h2>
+                <p class="section-intro" id="fix-intro">It takes zero extra effort and saves everyone's time.</p>
+
+                <div class="chat-demo good" id="chat-good">
+                    <div class="chat-header">
+                        <span class="chat-dot red"></span>
+                        <span class="chat-dot yellow"></span>
+                        <span class="chat-dot green"></span>
+                        <span class="chat-title">slack &mdash; #engineering</span>
+                    </div>
+                    <div class="chat-body">
+                        <div class="chat-message sent" id="msg-good-1">
+                            <div class="msg-meta"><span class="msg-author you">you</span> <span class="msg-time">12:32 PM</span></div>
+                            <div class="msg-text">Hey! Quick question — I'm working on the auth module and the session token seems to expire after 5 minutes instead of 30. Any idea where that config lives?</div>
+                        </div>
+                        <div class="chat-message received" id="msg-good-2">
+                            <div class="msg-meta"><span class="msg-author them">co-worker</span> <span class="msg-time">12:33 PM</span></div>
+                            <div class="msg-text">Yeah, check <code>config/auth.yaml</code> — the TTL is set there. 👍</div>
+                        </div>
+                    </div>
+                    <div class="chat-verdict" id="verdict-good">
+                        <span class="verdict-icon">⚡</span>
+                        <span class="verdict-text">1 minute — question asked and answered, nobody waited around</span>
+                    </div>
+                </div>
+
+                <div class="comparison-strip" id="comparison-strip">
+                    <div class="comparison-item bad" id="compare-bad">
+                        <div class="comparison-time">~3 min</div>
+                        <div class="comparison-bar">
+                            <div class="bar-fill bad-fill"></div>
+                        </div>
+                        <div class="comparison-label">With just "hello"</div>
+                    </div>
+                    <div class="comparison-item good" id="compare-good">
+                        <div class="comparison-time">~1 min</div>
+                        <div class="comparison-bar">
+                            <div class="bar-fill good-fill"></div>
+                        </div>
+                        <div class="comparison-label">With your question upfront</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="why-section" id="why-it-matters">
+            <div class="section-container">
+                <div class="section-label" id="why-label">Why It Matters</div>
+                <h2 id="why-heading">It's not rude — it's respectful</h2>
+
+                <div class="reasons-grid" id="reasons-grid">
+                    <div class="reason-card" id="reason-1">
+                        <div class="reason-icon">⏳</div>
+                        <h3>Typing is slower than talking</h3>
+                        <p>In a face-to-face conversation, the greeting and the question come together naturally. In chat, a standalone "hi" creates an awkward pause where the other person has to wait for you to finish typing.</p>
+                    </div>
+                    <div class="reason-card" id="reason-2">
+                        <div class="reason-icon">🌍</div>
+                        <h3>Chat is asynchronous</h3>
+                        <p>Your co-worker might be in a meeting, in a different timezone, or just away from their desk. If you only say "hello" and leave, they come back to a greeting with no context — and now they have to chase you down.</p>
+                    </div>
+                    <div class="reason-card" id="reason-3">
+                        <div class="reason-icon">🧠</div>
+                        <h3>Context helps everyone</h3>
+                        <p>When you include the question upfront, your co-worker can start thinking about it immediately. They might even have the answer ready by the time they respond.</p>
+                    </div>
+                    <div class="reason-card" id="reason-4">
+                        <div class="reason-icon">🤝</div>
+                        <h3>You're still being polite</h3>
+                        <p>Nobody thinks you're rude for including a greeting <em>and</em> a question. "Hey! Quick question about the deploy pipeline — ..." is perfectly friendly.</p>
+                    </div>
+                </div>
+
+                <div class="also-applies" id="also-applies">
+                    <h3>This also applies to:</h3>
+                    <div class="tag-cloud" id="tag-cloud">
+                        <span class="tag" id="tag-1">"Hello, are you there?"</span>
+                        <span class="tag" id="tag-2">"Hi, quick question."</span>
+                        <span class="tag" id="tag-3">"Hey"</span>
+                        <span class="tag" id="tag-4">"Do you have a sec?"</span>
+                        <span class="tag" id="tag-5">"yt?"</span>
+                        <span class="tag" id="tag-6">"ping"</span>
+                        <span class="tag" id="tag-7">"Hi Bob"</span>
+                        <span class="tag" id="tag-8">"yo"</span>
+                    </div>
+                    <p class="tag-footnote" id="tag-footnote">All of these create the same problem. Just ask the question.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="tldr-section" id="tldr">
+            <div class="section-container">
+                <div class="tldr-card" id="tldr-card">
+                    <div class="section-label" id="tldr-label">TL;DR</div>
+                    <h2 id="tldr-heading">Include your question with your greeting.</h2>
+                    <p id="tldr-body">It's a small change that saves minutes per conversation and hours across a team. Your co-workers will thank you — or at least silently appreciate you.</p>
+                    <div class="tldr-example" id="tldr-example">
+                        <div class="example-bad" id="example-bad">
+                            <span class="example-label">❌</span>
+                            <span class="example-text">"Hi"</span>
+                        </div>
+                        <div class="example-good" id="example-good">
+                            <span class="example-label">✅</span>
+                            <span class="example-text">"Hi! The CI build is failing on main — have you seen this before?"</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="site-footer">
+        <div class="footer-content">
+            <p id="footer-text">Made with care for better conversations everywhere.</p>
+            <p class="footer-sub" id="footer-sub">Inspired by the original <a href="https://www.nohello.com" target="_blank" rel="noopener" id="footer-link">nohello.com</a>. Share this with someone who needs it.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
